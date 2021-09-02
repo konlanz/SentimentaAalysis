@@ -6,7 +6,6 @@ const SW = require('stopword');
 const {spawn} = require('child_process');
 var router = express.Router();
 
-
 /* GET users listing. */
 router.get('/', function(req, res, next) {
   res.send('respond with a resource');
@@ -36,17 +35,18 @@ router.post('/anylizer', (req, res)=>{
 })
 
 router.get('/live', (req, res)=>{
- console.log("hello you here")
- const { spawn } = require('child_process');
- const pyProg = spawn('python', ['script.py']);
+  //const childPython = spawn('python', ['--version'])
+  const childPython = spawn('python', ['./routes/index.py'])
+  childPython.stdout.on('data', (data)=>{
+    console.log(`stdout: ${data}`)
+  })
+ childPython.stderr.on('data', (data)=>{
+   console.log(`stderr: ${data}`)
+ })
+ childPython.on('close', (code)=>{
+   console.log(`child proece exited with ${code}`)
+ })
+}) 
 
- pyProg.stdout.on('data', function(data) {
-
-     console.log(data.toString());
-     res.write(data);
-     res.end('end');
- });
- 
-})
 
 module.exports = router;

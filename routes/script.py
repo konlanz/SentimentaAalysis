@@ -1,2 +1,5 @@
+
 import sys
-print('Hello from python')
+# Takes first name and last name via command 
+# line arguments and then display them
+print("Output from Python")

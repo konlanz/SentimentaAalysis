@@ -4,5 +4,6 @@ import twint
 c = twint.Config()
 c.Username = "mellowfmlive"
 
+
 # Run
-twint.run.Search(c)
+twint.run.Profile(c)
