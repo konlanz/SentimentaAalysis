@@ -3,6 +3,7 @@ const aposToLexForm = require('apos-to-lex-form');
 const natural = require('natural');
 const SpellCorrector = require('spelling-corrector');
 const SW = require('stopword');
+const {spawn} = require('child_process');
 var router = express.Router();
 
 
@@ -32,6 +33,20 @@ router.post('/anylizer', (req, res)=>{
   const analysis = analyzer.getSentiment(filteredReview);
 
   res.status(200).json({ analysis });
+})
+
+router.get('/live', (req, res)=>{
+ console.log("hello you here")
+ const { spawn } = require('child_process');
+ const pyProg = spawn('python', ['script.py']);
+
+ pyProg.stdout.on('data', function(data) {
+
+     console.log(data.toString());
+     res.write(data);
+     res.end('end');
+ });
+ 
 })
 
 module.exports = router;
