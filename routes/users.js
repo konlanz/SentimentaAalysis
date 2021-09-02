@@ -15,7 +15,7 @@ const spellCorrector = new SpellCorrector();
 spellCorrector.loadDictionary();
 
 router.post('/anylizer', (req, res)=>{
-  const {data} = req.body;
+  const {review} = req.body;
   const lexedReview = aposToLexForm(review);
   const casedReview = lexedReview.toLowerCase();
   const alphaOnlyReview = casedReview.replace(/[^a-zA-Z\s]+/g, '');

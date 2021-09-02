@@ -11,11 +11,11 @@ const submitReview = (e) => {
     const title = document.getElementById('title');
     const outline = document.querySelector(':focus');
   
-    fetch('/api/nlp/s-analyzer', options)
+    fetch('/user/anylizer', options)
       .then(res => res.json())
       .then (({ analysis }) => {
         if (analysis < 0) {
-          emojiSection.innerHTML = '<img src="https://img.icons8.com/emoji/96/000000/angry-face.png">';
+          emojiSection.innerHTML = '<img src="https://img.icons8.com/officel/80/000000/angry.png">';
           title.style.color = 'red';
           outline.style.borderColor = 'red';
         };
