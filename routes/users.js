@@ -36,7 +36,7 @@ router.post('/anylizer', (req, res)=>{
 
 router.get('/live', (req, res)=>{
   //const childPython = spawn('python', ['--version'])
-  const childPython = spawn('python', ['./routes/index.py'])
+  const childPython = spawn('python', ['./routes/index.py', 'KNUSTGH'])
   childPython.stdout.on('data', (data)=>{
     console.log(`stdout: ${data}`)
   })
