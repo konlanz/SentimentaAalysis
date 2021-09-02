@@ -2,6 +2,7 @@ var express = require('express');
 const aposToLexForm = require('apos-to-lex-form');
 const natural = require('natural');
 const SpellCorrector = require('spelling-corrector');
+const SW = require('stopword');
 var router = express.Router();
 
 
@@ -25,6 +26,12 @@ router.post('/anylizer', (req, res)=>{
   tokenizedReview.forEach((word, index) => {
     tokenizedReview[index] = spellCorrector.correct(word);
   })
+  const filteredReview = SW.removeStopwords(tokenizedReview);
+  const { SentimentAnalyzer, PorterStemmer } = natural;
+  const analyzer = new SentimentAnalyzer('English', PorterStemmer, 'afinn');
+  const analysis = analyzer.getSentiment(filteredReview);
+
+  res.status(200).json({ analysis });
 })
 
 module.exports = router;
