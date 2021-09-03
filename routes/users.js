@@ -36,7 +36,7 @@ router.post('/anylizer', (req, res)=>{
 
   res.status(200).json({ analysis });
 })
-
+/*
 router.get('/live', (req, res)=>{
   //const childPython = spawn('python', ['--version'])
   const childPython = spawn('python', ['./routes/index.py', ])
@@ -71,6 +71,6 @@ router.get('/live', (req, res)=>{
    console.log(`child proece exited with ${code}`)
  })
 }) 
-
+*/
 
 module.exports = router;
