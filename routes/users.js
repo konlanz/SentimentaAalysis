@@ -4,6 +4,8 @@ const natural = require('natural');
 const SpellCorrector = require('spelling-corrector');
 const SW = require('stopword');
 const {spawn} = require('child_process');
+const { WordTokenizer } = natural;
+const { SentimentAnalyzer, PorterStemmer } = natural;
 var router = express.Router();
 
 /* GET users listing. */
@@ -30,16 +32,38 @@ router.post('/anylizer', (req, res)=>{
   const { SentimentAnalyzer, PorterStemmer } = natural;
   const analyzer = new SentimentAnalyzer('English', PorterStemmer, 'afinn');
   const analysis = analyzer.getSentiment(filteredReview);
+  
 
   res.status(200).json({ analysis });
 })
 
 router.get('/live', (req, res)=>{
   //const childPython = spawn('python', ['--version'])
-  const childPython = spawn('python', ['./routes/index.py', 'KNUSTGH'])
+  const childPython = spawn('python', ['./routes/index.py', ])
+  var review = ''
   childPython.stdout.on('data', (data)=>{
-    console.log(`stdout: ${data}`)
+    review = `stderr: ${data}`
+    const lexedReview = aposToLexForm(review);
+    const casedReview = lexedReview.toLowerCase();
+    const alphaOnlyReview = casedReview.replace(/[^a-zA-Z\s]+/g, '');
+    console.log('hello')
+    const { WordTokenizer } = natural;
+    const tokenizer = new WordTokenizer();
+    const tokenizedReview = tokenizer.tokenize(alphaOnlyReview);
+    tokenizedReview.forEach((word, index) => {
+      tokenizedReview[index] = spellCorrector.correct(word);
+    })
+    console.log('hello 2')
+    const filteredReview = SW.removeStopwords(tokenizedReview);
+    const { SentimentAnalyzer, PorterStemmer } = natural;
+    const analyzer = new SentimentAnalyzer('English', PorterStemmer, 'afinn');
+    const analysis = analyzer.getSentiment(filteredReview);
+    
+    console.log(analysis)
+    console.log(review)
   })
+  
+
  childPython.stderr.on('data', (data)=>{
    console.log(`stderr: ${data}`)
  })
