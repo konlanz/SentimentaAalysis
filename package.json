@@ -11,7 +11,7 @@
     "debug": "~2.6.9",
     "express": "~4.17.1",
     "morgan": "~1.9.1",
-    "natural": "^5.1.1",
+    "natural": "^5.1.11",
     "spelling-corrector": "^3.0.0",
     "stopword": "^1.0.11"
   }
